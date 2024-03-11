@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using TestAsp.Services;
 
 namespace TestAsp.Controllers
 {
@@ -6,28 +7,26 @@ namespace TestAsp.Controllers
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
     {
-        private static readonly string[] Summaries = new[]
-        {
-        "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-    };
+        private readonly IEmailSenderService _service;
 
-        private readonly ILogger<WeatherForecastController> _logger;
-
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        public WeatherForecastController(IEmailSenderService service)
         {
-            _logger = logger;
+            _service = service;
         }
 
-        [HttpGet(Name = "GetWeatherForecast")]
+        [HttpGet ("caca", Name = "Culo")]
         public IEnumerable<WeatherForecast> Get()
         {
-            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-            {
-                Date = DateTime.Now.AddDays(index),
-                TemperatureC = Random.Shared.Next(-20, 55),
-                Summary = Summaries[Random.Shared.Next(Summaries.Length)]
-            })
-            .ToArray();
+            _service.SendEmail("CULLO");
+            return null;
         }
+
+        [Route("Pipi")]
+        [HttpGet]
+        public string Pipi()
+        {
+            return "Pipi";
+        }
+
     }
 }
